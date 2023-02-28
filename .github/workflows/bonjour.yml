@@ -4,10 +4,11 @@ on:
 jobs:
   dire_bonjour:
     runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/dduportal/esgi-gitpod
-      options: --user=root
+    
     steps:
-      - uses: actions/checkout@v2
-      - run: cat README.md | cowsay
+      - uses: actions/checkout@v3
+      - name: "Build Image"
+        run: docker image build --tag=cowsay:latest ./
+      - name: "say hello"
+        run: docker container run --rm cowsay:latest bash -c "cat /README.md | cowsay"
 
